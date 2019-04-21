@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.js"></script>
+    <script src="jquery-3.3.1.js"></script>
+    <script src="ripple.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>keep fit健身网</title> 
+    <style>
+        @font-face {
+             font-family: 'Glyphicons Halflings';
+             src: url('glyphicons-halflings-regular.eot');
+             src: url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+             url('glyphicons-halflings-regular.woff') format('woff'), 
+             url('glyphicons-halflings-regular.ttf') format('truetype'),
+             url('glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+            }
+            .container{
+              position: static;
+              margin-top:8%;
+              height:1000px;
+              width: 70%;
+            }
+            .jumbotron{
+              height: 80%;
+              padding-top:3%;
+              padding-bottom:3%;
+              padding-right:3%;
+              padding-left:3%;
+            }
+            .p{font-family: "Times New Roman","宋体",sans-serif;
+              font-size: 150%;
+              opacity:6;
+              color: rgb(1, 7, 0);}
+            body{
+                text-align:center;
+                background:url(white.jpg)  no-repeat center center;
+                background-size:cover;
+                background-attachment:fixed;
+                }
+            .font-center{ text-align:center}
+            .biaoti{
+	              font-family: 微软雅黑;
+	              font-size: 26px;
+	              font-weight: bold;
+	              border-bottom:1px dashed #CCCCCC;
+	              color: #255e95;
+                }
+</style>
+</head>
+
+
+<body>
+  <div class="container" class="col-md-12">
+    <div  class="jumbotron" style="opacity:0.6">
+      <div id="useremail">
+      <h1>尊敬的用户{{email}},您好</h1>
+     <h2>我们已经根据您的身体数据制定了您的健身计划</h2></div>
+     <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center">
+      <tr>
+        <td align="center" class="biaoti" height="60">每周锻炼计划</td>
+      </tr>
+    </table><br><br>
+    <div id="plan">
+    <table class="table table-bordered" border="10">
+      <tr class="success">
+        <td>周一</td>
+        <td>{{day1}}</td>
+      </tr>
+      <tr class="warning">
+        <td>周二</td>
+        <td>{{day2}}</td>
+      </tr>
+      <tr class="danger">
+        <td>周三</td>
+        <td>{{day3}}</td>
+      </tr>
+      <tr class="info">
+        <td>周四</td>
+        <td>{{day4}}</td>
+      </tr>
+      <tr class="success">
+        <td>周五</td>
+        <td>{{day5}}</td>
+      </tr>
+      <tr class="warning">
+        <td>周六</td>
+        <td>{{day6}}</td>
+      </tr>
+      <tr class="danger">
+        <td>周日</td>
+        <td>{{day7}}</td>
+      </tr>
+    </table>
+  <h2>{{point}}</h2>
+  </div>
+    </div><div>
+<script>
+$.getJSON("outbmi.php",function(data,status){
+  new Vue({
+  el: '#useremail',
+  data: {
+    email:data.email
+     }
+    })
+  });
+
+$.getJSON("makeplan.php",function(data,status){
+  new Vue({
+  el: '#plan',
+  data: {
+    day1:data.day1,
+    day2:data.day2,
+    day3:data.day3,
+    day4:data.day4,
+    day5:data.day5,
+    day6:data.day6,
+    day7:data.day7,
+    point:data.point
+     }
+    })
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-3.3.1.js"></script>
+    <script src="ripple.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>keep fit健身网</title> 
+    <style>
+        @font-face {
+             font-family: 'Glyphicons Halflings';
+             src: url('glyphicons-halflings-regular.eot');
+             src: url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+             url('glyphicons-halflings-regular.woff') format('woff'), 
+             url('glyphicons-halflings-regular.ttf') format('truetype'),
+             url('glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+            }
+            .container{
+              position: static;
+              margin-top:8%;
+              height:830px;
+              width: 50%;
+            }
+            .jumbotron{
+              height: 80%;
+              padding-top:3%;
+              padding-bottom:3%;
+              padding-right:3%;
+              padding-left:3%;
+            }
+            .p{font-family: "Times New Roman","宋体",sans-serif;
+              font-size: 150%;
+              opacity:6;
+              color: rgb(1, 7, 0);}
+            body{
+                text-align:center;
+                background:url(white.jpg)  no-repeat center center;
+                background-size:cover;
+                background-attachment:fixed;
+                }
+            </style>
+</head>
+
+<body>
+    <div>
+        <div class="container" class="col-md-12">
+                <div  class="jumbotron" style="opacity:0.6">
+                    <h1>计算你的BMI</h1><br>
+    <fieldset>
+    <legend align="center" style="width:100%;text-align:center"><b>请输入个人身体数据</b></legend>
+    <p text-align="justify">
+     <div class="input-group col-md-3 col-md-offset-3" style="width:50%"><span class="input-group-addon" id="basic-addon2">体重:</span>
+            <input type="number"  class="form-control" placeholder="必须在30到200之间" aria-describedby="basic-addon2" id="weight">
+            <span class="input-group-addon" id="basic-addon2">KG</span>
+          </div>
+           <span class="label label-warning" id="span1" style="display:none;">必须在30到200之间</span><br>
+           <div class="input-group col-md-3 col-md-offset-3" style="width:50%"><span class="input-group-addon" id="basic-addon2">腰围:</span>
+            <input type="number"  class="form-control" placeholder="必须在30到200之间" aria-describedby="basic-addon2" id="waist">
+            <span class="input-group-addon" id="basic-addon2">CM</span>
+          </div>
+          <span class="label label-warning" id="span2" style="display:none;">必须在30到200之间</span><br>
+          <div class="input-group col-md-3 col-md-offset-3" style="width:50%"><span class="input-group-addon" id="basic-addon2">身高:</span>
+            <input type="number"  class="form-control" placeholder="必须在150到250之间" aria-describedby="basic-addon2" id="height">
+            <span class="input-group-addon" id="basic-addon2">CM</span>
+          </div>
+          <span class="label label-warning" id="span3" style="display:none;">必须在150到250之间</span><br>
+          <div class="input-group col-md-3 col-md-offset-3" style="width:50%"><span class="input-group-addon" id="basic-addon2">年龄:</span>
+            <input type="number"  class="form-control" placeholder="必须在10到100之间" aria-describedby="basic-addon2" id="age">
+            <span class="input-group-addon" id="basic-addon2">YEAR</span>
+          </div>
+          <span class="label label-warning" id="span4" style="display:none;">必须在10到100之间</span></p>
+    <form name="sexform">
+    <p>性别: <input type="radio" name="sex" value="male">男 &nbsp;
+                <input type="radio" name="sex" value="female">女<br><span class="label label-warning" id="span5" style="display:none;">请选择你的性别</span></p>
+    </form>
+    <button data-ripple onclick=" CountBMI()" style=" width:130px; height:30px; border:0; background:url(buttonback.png) no-repeat center;background-size:100%"
+                 onmouseover="this.style.backgroundImage='url(buttonback3.png)'"
+                 onmouseout="this.style.backgroundImage='url(buttonback.png)'">
+                 <span class="glyphicon glyphicon-upload"   aria-hidden="true"></span><text style='margin-left:3px'>提交</text>
+    </button>
+                 <br><br>
+                 <br>
+                 <p id="loseweight"></p>
+    <script>
+        Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function(element){
+        new RippleEffect(element); });
+        var  BMI;
+        var loseweight;
+        function CountBMI(){
+        var x=document.getElementById("weight").value;
+        var z=document.getElementById("height").value;
+        var y=document.getElementById("waist").value;
+        var a=document.getElementById("age").value;
+        if(x>=30 && x<=200){
+            $("#span1").hide();
+        }
+        if(y>=30 && y<=200){
+            $("#span2").hide();
+        }
+        if(z>=150 && z<=250){
+            $("#span3").hide();
+        }
+        if(a>=10 && a<=100){
+            $("#span4").hide();
+        }
+        if(document.sexform.sex[0].checked || document.sexform.sex[1].checked){
+            $("#span5").hide();
+        }
+
+
+        if(x>=30 && x<=200 && y>=30 && y<=200 && z>=150 && z<=250 && a>=10 && a<=100 && (document.sexform.sex[0].checked || document.sexform.sex[1].checked)){
+          
+            if(document.sexform.sex[0].checked ){
+             gender='男';
+           }
+
+           else if(document.sexform.sex[1].checked ){
+            gender='女';
+           }
+        weight=x;
+        height=z;
+        waist=y;
+        age=a;
+        var bmi1=weight/(height*height/10000);
+        var bmi=bmi1.toFixed(2);
+        if(bmi>24){
+           plan='C';
+        }
+        else if(bmi<=24 && bmi>=22){
+          plan='B';
+        }
+        else if(bmi<22){
+          plan='A';
+        }
+         $.post("count.php",{
+           weight,
+           height,
+           waist,
+           age,
+           gender,
+           bmi,
+           plan
+         },
+         function(data,status){
+              window.location.href='makeplan.html';           
+         }
+         );
+        }
+        else{
+        if(x<30 || x>200){
+            if($("#span1").css("display")=="none"){
+                $("#span1").show();}
+        }
+         if(y<30 || y>200){
+            if($("#span2").css("display")=="none"){
+				$("#span2").show();}
+        }
+         if(z<150 || z>250){
+            if($("#span3").css("display")=="none"){
+				$("#span3").show();}
+        }
+         if(a<10 || a>100){
+            if($("#span4").css("display")=="none"){
+				$("#span4").show();}
+        }
+    if(document.sexform.sex[0].checked ){
+        
+        }
+
+    else if(document.sexform.sex[1].checked ){
+
+        }
+
+    else{
+        if($("#span5").css("display")=="none"){
+				$("#span5").show();}
+        }
+    }   
+    }
+    </script>
+    </fieldset>
+        </div>
+        </div>
+        </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="vue.js"></script>
+    <script src="jquery-3.3.1.js"></script>
+    <script src="ripple.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>keep fit健身网</title> 
+    <style>
+        @font-face {
+             font-family: 'Glyphicons Halflings';
+             src: url('glyphicons-halflings-regular.eot');
+             src: url('glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+             url('glyphicons-halflings-regular.woff') format('woff'), 
+             url('glyphicons-halflings-regular.ttf') format('truetype'),
+             url('glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+            }
+            .container{
+              position: static;
+              margin-top:8%;
+              height:830px;
+              width: 50%;
+            }
+            .jumbotron{
+              height: 80%;
+              padding-top:3%;
+              padding-bottom:3%;
+              padding-right:3%;
+              padding-left:3%;
+            }
+            .p{font-family: "Times New Roman","宋体",sans-serif;
+              font-size: 150%;
+              opacity:6;
+              color: rgb(1, 7, 0);}
+            body{
+                text-align:center;
+                background:url(white.jpg)  no-repeat center center;
+                background-size:cover;
+                background-attachment:fixed;
+                }
+            </style>
+</head>
+
+
+<body>
+    <div class="container" class="col-md-12">
+        <div  class="jumbotron" style="opacity:0.6">
+          <div id="bodydata">
+          <h1>{{email}}</h1>
+          <h2>以下为您以往的记录</h2><br><br>
+          <p v-html="weight"></p>
+          <p v-html="height"></p>
+          <p v-html="waist"></p>
+          <p v-html="age"></p>
+          <p v-html="gender"></p>
+          <p v-html="bmi"></p>
+          <p>成年人的正常BMI应在18.5-24之间</p><br>
+          <button  id="button1" class="btn btn-primary btn-lg" onclick="location.href='countbmi.html'" >更改个人数据</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <button  id="button2" class="btn btn-primary btn-lg" onclick="location.href='makeplan.html'" >查看健身计划</button>
+        </div>
+        </div>
+      </div>
+<script>
+$.getJSON("outbmi.php",function(data,status){
+  new Vue({
+  el: '#bodydata',
+  data: {
+    email:"欢迎 "+data.email,
+    weight: "您的体重为"+data.weight+"KG",
+    height: "您的体重为"+data.height+"CM",
+    waist: "您的腰围为"+data.waist+"CM",
+    age: "您的年龄为"+data.age+"岁",
+    gender: "您的性别为"+data.gender,
+    bmi: "您的BMI为"+data.bmi
+     }
+    })
+  });
+
+</script>
+</body>
+</html>
